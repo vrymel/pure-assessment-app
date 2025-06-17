@@ -12,7 +12,7 @@ export class PropertyAgentService {
     return this.agents
   }
 
-  searchAgent(email: string) : PropertyAgent | null {
+  searchAgent(email: string) : PropertyAgent | undefined {
     return this.agents.find(agent => {
       return agent.email.toLowerCase() === email.toLowerCase()
     })
@@ -44,5 +44,21 @@ export class PropertyAgentService {
     this.agents[agentIndex] = updatedAgent
 
     return updatedAgent
+  }
+
+  deleteAgent(id: string) {
+    const agentIndex = this.agents.findIndex(agent => agent.id === id)
+    if (agentIndex === -1) {
+      throw new Error('Agent not found')
+    }
+
+    const deletedAgent = this.agents[agentIndex]
+    this.agents.splice(agentIndex, 1)
+
+    return deletedAgent
+  }
+
+  findAgentById(id: string): PropertyAgent | null {
+    return this.agents.find(agent => agent.id === id) || null
   }
 }

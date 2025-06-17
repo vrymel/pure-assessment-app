@@ -14,9 +14,24 @@ export default class PropertyAgentController {
     })
   }
 
+  public async show({ params, response }: HttpContext) {
+    const { id } = params
+
+    const agent = this.propertyAgentService.findAgentById(id)
+
+    if (!agent) {
+      return response.status(404).json({
+        message: 'Agent not found',
+      })
+    }
+
+    return response.json({
+      data: agent,
+    })
+  }
+
   public async store({ request, response }: HttpContext) {
     const agentData = request.body()
-    const allAgents = await this.propertyAgentService.getAllAgents()
 
     let agent
     let existing = this.propertyAgentService.searchAgent(agentData.email)
@@ -29,6 +44,25 @@ export default class PropertyAgentController {
     return response.json({
       data: agent,
       message: existing ? 'Agent updated successfully' : 'Agent created successfully',
+    })
+  }
+
+  public async destroy({ params, response }: HttpContext) {
+    const { id } = params
+
+    // Check if agent exists first
+    const existingAgent = this.propertyAgentService.findAgentById(id)
+    if (!existingAgent) {
+      return response.status(404).json({
+        message: 'Agent not found',
+      })
+    }
+
+    const deletedAgent = this.propertyAgentService.deleteAgent(id)
+
+    return response.json({
+      data: deletedAgent,
+      message: 'Agent deleted successfully',
     })
   }
 }
