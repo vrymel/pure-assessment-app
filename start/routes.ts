@@ -17,3 +17,5 @@ router.group(() => {
   router.get('/property-agents/:id', [PropertyAgentController, 'show'])
   router.delete('/property-agents/:id', [PropertyAgentController, 'destroy'])
 }).prefix('/api')
+
+router.on('/').renderInertia('home')
