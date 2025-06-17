@@ -19,16 +19,16 @@ export default class PropertyAgentController {
     const allAgents = await this.propertyAgentService.getAllAgents()
 
     let agent
-    if (allAgents.length === 0) {
-      agent = await this.propertyAgentService.createAgent(agentData)
+    let existing = this.propertyAgentService.searchAgent(agentData.email)
+    if (existing) {
+      agent = this.propertyAgentService.updateAgent(existing.id, agentData)
     } else {
-      const existingAgent = allAgents[0]
-      agent = await this.propertyAgentService.updateAgent(existingAgent.id, agentData)
+      agent = await this.propertyAgentService.createAgent(agentData)
     }
 
     return response.json({
-      data: this.propertyAgentService.getAllAgents(),
-      message: allAgents.length === 0 ? 'Agent created successfully' : 'Agent updated successfully'
+      data: agent,
+      message: existing ? 'Agent updated successfully' : 'Agent created successfully',
     })
   }
 }
