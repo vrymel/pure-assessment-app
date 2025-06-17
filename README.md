@@ -4,15 +4,26 @@ This project is my solution to the PURE Property Management assessment.
 
 ## Setup
 
+### Node version
+
+The node version I used for this is v22.12.0
+
+### Dependency install
+
 This is an [adonisjs](https://adonisjs.com/) project. So to be able to run this in your machine you must install the dependencies. Run the command below to install:
 
 ```bash
 npm install
 ```
 
-### Node version
+### Create environment file
 
-The node version I used for this is v22.12.0
+Run the following commands to initialize the `.env` file.
+
+```
+cp .env.example .env
+node ace generate:key
+```
 
 ## Development server
 
@@ -29,22 +40,60 @@ The application is accessible via http://localhost:3333 by default.
 
 ### API
 
-Get list of property agents - `GET /api/property-agents/`
+#### Get list of property agents
+
+`GET /api/property-agents/`
+
+Example:
 
 ```bash
 curl --location 'http://localhost:3333/api/property-agents/'
 ```
 
-Get a property agent - `GET /api/property-agents/:id/`
+#### Get a property agent
+
+`GET /api/property-agents/:id/`
+
+Example:
 
 ```bash
 curl --location 'http://localhost:3333/api/property-agents/215c082e-9943-40dc-a94b-0221fe5374d1/'
 ```
 
-Upsert property agent - `POST /api/property-agents/`
+#### Upsert property agent
 
-Delete a property agent - `DELETE /api/property-agents/:id/`
+`POST /api/property-agents/`
 
+Example:
+
+```
+curl --location 'http://localhost:3333/api/property-agents/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "firstName": "Vrymel",
+    "lastName": "Omandam",
+    "email": "vrymel@example.com",
+    "mobileNumber": "+1234567890"
+}'
+```
+
+#### Delete a property agent
+
+`DELETE /api/property-agents/:id/`
+
+Example:
+
+```
+curl --location --request DELETE 'http://localhost:3333/api/property-agents/4ad589d4-b425-4d6b-b5ec-29caf532e911/'
+```
+
+### Web
+
+#### Vue Form for Property Agent
+
+```
+http://localhost:3333/
+```
 
 ## Relevant files
 
