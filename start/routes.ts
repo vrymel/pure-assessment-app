@@ -8,5 +8,9 @@
 */
 
 import router from '@adonisjs/core/services/router'
-router.on('/').renderInertia('home')
 
+const PropertyAgentController = () => import('#controllers/property_agent_controller')
+
+router.group(() => {
+  router.get('/property-agents', [PropertyAgentController, 'index'])
+}).prefix('/api')
